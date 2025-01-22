@@ -630,6 +630,14 @@ video {
   --un-bg-opacity: 1;
   background-color: rgb(153 27 27 / var(--un-bg-opacity));
 }
+.bg-green {
+  --un-bg-opacity: 1;
+  background-color: #00582c;
+}
+.bg-yellow {
+  --un-bg-opacity: 1;
+  background-color: #6c6900;
+}
 .bg-op-3 {
   --un-bg-opacity: 0.03;
 }

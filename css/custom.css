@@ -7,3 +7,44 @@
 
 /* Ensure paragraphs and body default use the darker foreground */
 body { color: var(--foreground); }
+
+/* Mobile-friendly layout helpers */
+.mobile-minheight {
+  /* Allow address bar to collapse without squishing content */
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Respect device safe areas while keeping some breathing room */
+  padding-top: max(1rem, env(safe-area-inset-top, 0px));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+/* Nudge absolute elements above iOS home indicator */
+.safe-bottom { bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); }
+@media (min-width: 640px) {
+  .safe-bottom { bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* Make small icons easier to tap without changing layout */
+.touch-targets a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: -10px;
+}
+
+/* Improve hero readability on small screens */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(2.25rem, 9vw, 3rem);
+    line-height: 1.05;
+  }
+}
+
+/* Visible focus outline for keyboard users */
+a:focus-visible, .touch-targets a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+  border-radius: 6px;
+}

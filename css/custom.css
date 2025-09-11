@@ -1,0 +1,9 @@
+:root {
+  --foreground: #1f2937;  /* slate-800 */
+  --stone-600: #475569;   /* slate-600 */
+  --stone-700: #334155;   /* slate-700 */
+  --stone-800: #1f2937;   /* slate-800 */
+}
+
+/* Ensure paragraphs and body default use the darker foreground */
+body { color: var(--foreground); }

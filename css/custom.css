@@ -8,6 +8,15 @@
 /* Ensure paragraphs and body default use the darker foreground */
 body { color: var(--foreground); }
 
+@media (max-width: 640px) {
+  :root {
+    --text-xs: 0.8rem;
+    --text-sm: 0.95rem;
+    --text-base: 1.05rem;
+    --text-lg: 1.2rem;
+  }
+}
+
 /* Mobile-friendly layout helpers */
 .mobile-minheight {
   /* Allow address bar to collapse without squishing content */
@@ -32,6 +41,10 @@ body { color: var(--foreground); }
   justify-content: center;
   padding: 10px;
   margin: -10px;
+}
+
+.bg-white {
+  background-color: #fff;
 }
 
 /* Improve hero readability on small screens */

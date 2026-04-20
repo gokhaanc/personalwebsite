@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+    }
+
+    #container {
+      position: relative;
+      width: 100%; height: 100vh; height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      cursor: none;
+    }
+
+    #container.cursor-visible { cursor: default; }
+
+    #video {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: none;
+    }
+
+    /* Click trap over video */
+    #click-trap {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      cursor: inherit;
+    }
+
+    /* Controls */
+    #controls {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.5rem 1.5rem;
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
+    }
+
+    #container.ui-visible #controls { opacity: 1; }
+
+    /* Progress */
+    #progress-wrap {
+      width: 100%;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #progress-track {
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+      position: relative;
+      transition: height 0.15s;
+    }
+
+    #progress-wrap:hover #progress-track { height: 5px; }
+
+    #progress-fill {
+      height: 100%;
+      background: #fff;
+      border-radius: 2px;
+      width: 0%;
+      pointer-events: none;
+    }
+
+    /* Bottom row */
+    #row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      background: none; border: none;
+      cursor: pointer;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      opacity: 0.85;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .btn:hover { opacity: 1; }
+    .btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+    #time {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .gap { flex: 1; }
+  </style>
+</head>
+<body>
+<div id="container">
+  <video
+    id="video"
+    src="../tav-prototip2.mp4"
+    preload="metadata"
+    playsinline
+    disablepictureinpicture
+    draggable="false"
+  ></video>
+  <div id="click-trap"></div>
+  <div id="controls">
+    <div id="progress-wrap">
+      <div id="progress-track">
+        <div id="progress-fill"></div>
+      </div>
+    </div>
+    <div id="row">
+      <button class="btn" id="play-btn" aria-label="Play/Pause">
+        <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span id="time">0:00 / 0:00</span>
+      <div class="gap"></div>
+      <button class="btn" id="fs-btn" aria-label="Fullscreen">
+        <svg id="fs-icon" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Block right-click and drag to prevent easy access to video URL
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('dragstart', e => e.preventDefault());
+
+  const video    = document.getElementById('video');
+  const container= document.getElementById('container');
+  const clickTrap= document.getElementById('click-trap');
+  const playBtn  = document.getElementById('play-btn');
+  const playIcon = document.getElementById('play-icon');
+  const fill     = document.getElementById('progress-fill');
+  const progWrap = document.getElementById('progress-wrap');
+  const timeEl   = document.getElementById('time');
+  const fsBtn    = document.getElementById('fs-btn');
+  const fsIcon   = document.getElementById('fs-icon');
+
+  const PLAY_PATH  = 'M8 5v14l11-7z';
+  const PAUSE_PATH = 'M6 19h4V5H6v14zm8-14v14h4V5h-4z';
+  const FS_ENTER   = 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z';
+  const FS_EXIT    = 'M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z';
+
+  function fmt(s) {
+    if (!s || isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+
+  function syncProgress() {
+    const pct = video.duration ? (video.currentTime / video.duration) * 100 : 0;
+    fill.style.width = pct + '%';
+    timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration);
+  }
+
+  video.addEventListener('timeupdate', syncProgress);
+  video.addEventListener('loadedmetadata', syncProgress);
+
+  video.addEventListener('play',  () => { playIcon.querySelector('path') ? playIcon.innerHTML = `<path d="${PAUSE_PATH}"/>` : null; playIcon.innerHTML = `<path d="${PAUSE_PATH}"/>`; });
+  video.addEventListener('pause', () => { playIcon.innerHTML = `<path d="${PLAY_PATH}"/>`; });
+  video.addEventListener('ended', () => { playIcon.innerHTML = `<path d="${PLAY_PATH}"/>`; });
+
+  function togglePlay() { video.paused ? video.play() : video.pause(); }
+
+  playBtn.addEventListener('click', togglePlay);
+  clickTrap.addEventListener('click', togglePlay);
+
+  // Seek — click
+  progWrap.addEventListener('click', e => {
+    const r = progWrap.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    if (video.duration) video.currentTime = pct * video.duration;
+  });
+
+  // Seek — drag
+  let seeking = false;
+  progWrap.addEventListener('mousedown', () => { seeking = true; });
+  document.addEventListener('mousemove', e => {
+    if (!seeking) return;
+    const r = progWrap.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    if (video.duration) video.currentTime = pct * video.duration;
+  });
+  document.addEventListener('mouseup', () => { seeking = false; });
+
+  // Seek — touch
+  progWrap.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const r = progWrap.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (e.touches[0].clientX - r.left) / r.width));
+    if (video.duration) video.currentTime = pct * video.duration;
+  }, { passive: false });
+
+  // Fullscreen
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      container.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', () => {
+    fsIcon.innerHTML = document.fullscreenElement
+      ? `<path d="${FS_EXIT}"/>`
+      : `<path d="${FS_ENTER}"/>`;
+  });
+
+  // Auto-hide controls
+  let hideTimer;
+  function showUI() {
+    container.classList.add('ui-visible', 'cursor-visible');
+    clearTimeout(hideTimer);
+    if (!video.paused) {
+      hideTimer = setTimeout(() => {
+        container.classList.remove('ui-visible', 'cursor-visible');
+      }, 2500);
+    }
+  }
+
+  container.addEventListener('mousemove', showUI);
+  container.addEventListener('touchstart', showUI, { passive: true });
+
+  video.addEventListener('pause', () => { container.classList.add('ui-visible', 'cursor-visible'); clearTimeout(hideTimer); });
+  video.addEventListener('play',  () => { showUI(); });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space')       { e.preventDefault(); togglePlay(); }
+    if (e.code === 'ArrowRight')  { video.currentTime = Math.min(video.duration || 0, video.currentTime + 5); }
+    if (e.code === 'ArrowLeft')   { video.currentTime = Math.max(0, video.currentTime - 5); }
+    if (e.code === 'KeyF')        { fsBtn.click(); }
+  });
+
+  // Show controls initially
+  showUI();
+})();
+</script>
+</body>
+</html>

@@ -465,7 +465,7 @@
 <body>
   <header>
     <h1>Evora Sitesi E-Parsel Doğalgaz Dilekçe Oluşturucu</h1>
-    <p>Yalnızca ad soyad, blok ve daire bilgilerini doldurun. Telefon isteğe bağlıdır; boş bırakılırsa dilekçede görünmez. Dilekçe metni otomatik oluşur; PDF oluşturma işlemi tarayıcıda yapılır.</p>
+    <p>Yalnızca ad soyad, blok ve daire ve imza bilgilerini doldurun, blok temsilcinize ya da WhatsApp grubuna indirdiğiniz belgeyi gönderin. Dilekçe metni otomatik oluşur; PDF oluşturma işlemi sizin cihazınızda yapılır ve hiç bir bilgi bu site üzerinde saklanmaz.</p>
   </header>
 
   <main class="wrap">
@@ -493,7 +493,7 @@
       <div class="grid">
         <div class="field">
           <label for="blockNo">Blok <span class="required">*</span></label>
-          <input id="blockNo" placeholder="Örn. A / B / C" />
+          <input id="blockNo" placeholder="Örn. E-4" />
         </div>
         <div class="field">
           <label for="flatNo">Daire No <span class="required">*</span></label>
@@ -509,6 +509,7 @@
 
       <div class="field">
         <label for="signaturePad">İmza</label>
+        <div class="hint">Buraya imzanızı çizebilirsiniz. Belgenin sonuna eklenecektir.</div>
         <div class="signature-pad-wrap">
           <canvas id="signaturePad" aria-label="İmza çizim alanı"></canvas>
         </div>

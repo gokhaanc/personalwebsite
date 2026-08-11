@@ -2,7 +2,8 @@
   const canvas = document.getElementById('fog-canvas');
   if (!canvas) return;
 
-  const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const dpr = motionQuery.matches ? 1 : Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
   let gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
   if (!gl) {
     canvas.style.display = 'none';
@@ -161,31 +162,72 @@
   let clickPos = [0.0, 0.0];
   let clickTime = 0.0;
 
-  window.addEventListener('mousemove', (e) => {
-    const x = e.clientX / window.innerWidth;
-    const y = 1.0 - (e.clientY / window.innerHeight); // flip Y for gl_FragCoord
-    mouse[0] = x;
-    mouse[1] = y;
-  }, { passive: true });
+  if (!motionQuery.matches) {
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = 1.0 - (e.clientY / window.innerHeight); // flip Y for gl_FragCoord
+      mouse[0] = x;
+      mouse[1] = y;
+    }, { passive: true });
 
-  window.addEventListener('pointerdown', (e) => {
-    const x = e.clientX / window.innerWidth;
-    const y = 1.0 - (e.clientY / window.innerHeight);
-    clickPos[0] = x;
-    clickPos[1] = y;
-    clickTime = performance.now() / 1000;
-  });
+    window.addEventListener('pointerdown', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = 1.0 - (e.clientY / window.innerHeight);
+      clickPos[0] = x;
+      clickPos[1] = y;
+      clickTime = performance.now() / 1000;
+    });
+  }
 
   const start = performance.now();
-  function frame(){
-    const t = (performance.now() - start) / 1000;
+  let animationFrame = 0;
+  let lastDrawTime = 0;
+
+  function frame(now){
+    animationFrame = 0;
+
+    if (!motionQuery.matches && now - lastDrawTime < 32) {
+      animationFrame = requestAnimationFrame(frame);
+      return;
+    }
+
+    lastDrawTime = now;
+    const t = (now - start) / 1000;
     gl.uniform2f(uRes, width, height);
     gl.uniform1f(uTime, t);
     gl.uniform2f(uMouse, mouse[0], mouse[1]);
     gl.uniform2f(uClickPos, clickPos[0], clickPos[1]);
     gl.uniform1f(uClickTime, clickTime);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    requestAnimationFrame(frame);
+
+    if (!motionQuery.matches && !document.hidden) {
+      animationFrame = requestAnimationFrame(frame);
+    }
   }
-  frame();
+
+  function startRendering(){
+    if (animationFrame) return;
+    if (motionQuery.matches) frame(performance.now());
+    else animationFrame = requestAnimationFrame(frame);
+  }
+
+  function handleMotionChange(){
+    if (motionQuery.matches && animationFrame) {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+    }
+    startRendering();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) startRendering();
+  });
+
+  if (typeof motionQuery.addEventListener === 'function') {
+    motionQuery.addEventListener('change', handleMotionChange);
+  } else {
+    motionQuery.addListener(handleMotionChange);
+  }
+
+  startRendering();
 })();

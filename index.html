@@ -1,149 +1,192 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Gökhan Ç.</title>
-  <meta name="description" content="Scale with granularity">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="Gökhan Çınar is a vibe coder based in Istanbul, Türkiye, building focused digital products.">
+  <title>Gökhan Çınar — Vibe Coder</title>
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" sizes="16x16">
-  <link rel="stylesheet" href="css/105c502fa036075b.css">
-  <link rel="stylesheet" href="css/custom.css">
-  <script src="js/fog.js" defer></script>
+  <link rel="stylesheet" href="css/now.css?v=20260812-13">
+  <script src="js/now.js?v=20260812-13" defer></script>
 </head>
+<body>
+  <header class="site-header">
+    <time class="local-clock" data-clock datetime="" aria-label="Visitor local date and time">TUE, AUG 11 · 12:00 PM</time>
 
-<body class="__variable_5cfdac __variable_9a8899">
-  <div class="">
-    <div class="grain-overlay" aria-hidden="true"></div>
-    <canvas id="fog-canvas" style="position:fixed;inset:0;width:100%;height:100%;z-index:15;pointer-events:none;"></canvas>
-    <div class="fixed inset-0 z-40 pointer-events-none opacity-[0.6] mix-blend-multiply"
-      style="background-image:url('images/noise.svg');background-repeat:repeat;background-size:120px 120px"></div>
+    <div class="display-name" aria-hidden="true">
+      <span>Gökhan</span>
+      <span>Çınar</span>
+      <img class="profile-avatar" src="images/now/avatar-gokhan.jpg" width="68" height="68" alt="">
+    </div>
+    <h1 class="sr-only">Gökhan Çınar — vibe coder based in Istanbul, Türkiye</h1>
 
-    <main class="z-20 flex items-center justify-center relative w-full mobile-minheight">
-      <div class="relative w-full max-w-lg px-8 sm:px-0">
-        <div class="flex flex-col">
-          <div class="w-full">
-            <div class="overflow-hidden">
-              <h1
-                class="hero-title text-[clamp(4rem,8vw,5.5rem)] leading-[0.9] tracking-tighter text-stone-800 flex items-center gap-0">
-                <span>Gökhan Çınar</span><span class="inline-block align-baseline"
-                  style="will-change:transform, opacity;opacity:0;transform:translateY(-80px) scale(0.98)"><span
-                    style="display:inline-block;transform:scale(0.9)"><svg viewBox="0 0 233 228" width="0.15em"
-                      height="0.15em" xmlns="http://www.w3.org/2000/svg"
-                      class="ml-[0.15em] w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 mt-[0.14em] md:mt-[0.12em] lg:mt-[0.12em] translate-y-[0.02em] drop-shadow-[0_0_1px_rgba(0,0,0,0.25)]"
-                      role="img">
-                      <path
-                        d="M150.5 4L136 1L116.5 2.5L99 7.5L77 18.5L57 34L36 56.5L22.5 74L12 91.5L4 111.5L0.5 130.5V141L2 152.5L7.5 167L15 179L28 191.5L43.5 202L62 210L97.5 220.5L149.5 227H167L180 226L191.5 223.5L204.5 218.5L212.5 213L223.5 201L227 193L230.5 184L232.5 170.5V149L230.5 138L227 123.5L223.5 111L221 102.5L212 80L198.5 51L188 33.5L179.5 21.5L172 15L158.5 6.5L150.5 4Z"
-                        fill="#FFFFFF" stroke="#FFFFFF"></path>
-                    </svg></span></span></h1>
-              <div class="space-y-4 sm:space-y-6">
-                <p class="text-xs sm:text-sm lg:text-base text-stone-600 tracking-[0.15em] sm:tracking-[0.2em] uppercase">
-                </p>
-                <p class="text-sm sm:text-base lg:text-lg text-stone-700 leading-relaxed font-light">vibe coder and indie maker</p>
-                <!-- <p><span class="font-bold">Pebble Farm</span> is building a generational company, one thoughtful bet at a
-                  time. We aim to balance velocity with craft. Shipping fast enough to learn, refining long enough to
-                  matter.<br><br>Our mission: Products worth keeping.<br><br></p> -->
-              </div>
-              <div class="mt-12 pt-8 border-t border-stone-300/20">
-                <h2 class="text-xs text-stone-400 tracking-[0.2em] uppercase mb-6">Products</h2>
-                <div class="space-y-4">
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center">
-                      <img alt="Talent Clerk" loading="lazy" width="24" height="24" decoding="async" data-nimg="1"
-                        class="rounded-lg bg-white" style="color:transparent" srcset="images/image_5.svg 1x, images/image_5.svg 2x"
-                        src="images/image_5.svg">
-                    </div>
-                    <span class="text-sm ml-1"><a href="https://talentclerk.com" target="_blank" rel="noopener noreferrer"
-                        class="font-medium hover:underline cursor-pointer text-stone-700">Talen Clerk</a><span
-                        class="mx-2">—</span><span class="font-light">Screen resumes 10× faster—without missing great talent</span></span>
-                  </div>
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center">
-                      <img alt="PlakaTR" loading="lazy" width="24" height="24" decoding="async" data-nimg="1"
-                        class="rounded-lg bg-white" style="color:transparent" srcset="images/image_2.png 1x, images/image_2.png 2x"
-                        src="images/image_2.png">
-                    </div>
-                    <span class="text-sm ml-1">
-                      <div class="relative inline-block">
-                        <div><a href="https://plakatr.com" target="_blank" rel="noopener noreferrer"
-                        class="font-medium hover:underline cursor-pointer text-stone-700">PlakaTR</a></div>
-                      </div><span class="mx-2">—</span><span class="font-light">License plate commenting app</span>
-                    </span>
-                  </div>
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center">
-                      <img alt="PlakaTR" loading="lazy" width="24" height="24" decoding="async" data-nimg="1"
-                        class="rounded-lg bg-white" style="color:transparent" srcset="images/image_4.svg 1x, images/image_4.svg 2x"
-                        src="images/image_4.svg">
-                    </div>
-                    <span class="text-sm ml-1">
-                      <div class="relative inline-block">
-                        <div><a href="https://creaffin.com" target="_blank" rel="noopener noreferrer"
-                        class="font-medium hover:underline cursor-pointer text-stone-700">Creaffin</a></div>
-                      </div><span class="mx-2">—</span><span class="font-light">Digital agency for doctors</span>
-                    </span>
-                  </div>
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center text-base leading-none" aria-label="Coming soon" role="img">
-                      ⏳
-                    </div>
-                    <span class="text-sm ml-1">
-                      <span class="font-medium text-stone-700">Imposto</span><span class="mx-2">—</span><span class="font-light">Find the Spy. iOS party word game.</span><span class="status-badge is-soon">Coming Soon</span>
-                    </span>
-                  </div>
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center text-base leading-none" aria-label="Coming soon" role="img">
-                      ⏳
-                    </div>
-                    <span class="text-sm ml-1">
-                      <span class="font-medium text-stone-700">SyncDrive</span><span class="mx-2">—</span><span class="font-light">The ultimate mental challenge.</span><span class="status-badge is-soon">Coming Soon</span>
-                    </span>
-                  </div>
-                  <div class="flex items-center text-stone-600">
-                    <div class="w-6 h-6 z-10 rounded-lg flex items-center justify-center text-base leading-none" aria-label="In review" role="img">
-                      👀
-                    </div>
-                    <span class="text-sm ml-1">
-                      <span class="font-medium text-stone-700">ProShot</span><span class="mx-2">—</span><span class="font-light">iOS AI headshot generator powered by GPT Images 2.0.</span><span class="status-badge is-review">In Review</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <nav class="social-nav" aria-label="Social profiles">
+      <a class="social-link" href="https://github.com/gokhaanc" target="_blank" rel="noopener noreferrer" aria-label="GitHub, gokhaanc">
+        <img src="images/now/icons/brand-github.svg" width="18" height="18" alt="" aria-hidden="true">
+        <span class="social-tooltip" role="tooltip">GitHub · gokhaanc</span>
+      </a>
+      <a class="social-link" href="https://x.com/gokhanpw" target="_blank" rel="noopener noreferrer" aria-label="X, at gokhanpw">
+        <img src="images/now/icons/brand-x.svg" width="18" height="18" alt="" aria-hidden="true">
+        <span class="social-tooltip" role="tooltip">X · @gokhanpw</span>
+      </a>
+    </nav>
+  </header>
+
+  <main class="bento" aria-label="About and current projects">
+    <article class="card bio-card">
+      <span class="card-icon" aria-hidden="true">
+        <img src="images/now/icons/menu-2.svg" width="20" height="20" alt="">
+      </span>
+      <img class="bio-avatar" src="images/now/avatar-gokhan.jpg" width="24" height="24" alt="" aria-hidden="true">
+      <p>vibe coder, based in<br>Istanbul, Türkiye</p>
+    </article>
+
+    <button class="card contact-card" type="button" data-copy-email="hi@gokhan.pw" aria-describedby="copy-instruction">
+      <span class="card-icon" aria-hidden="true">
+        <img src="images/now/icons/mail.svg" width="20" height="20" alt="">
+      </span>
+      <span class="contact-copy">
+        <span class="contact-email" data-copy-label>hi@gokhan.pw</span>
+        <span class="contact-hint" id="copy-instruction" data-copy-hint>Copy email</span>
+      </span>
+      <span class="copy-action" aria-hidden="true">
+        <img class="copy-icon is-visible" data-copy-icon src="images/now/icons/copy.svg" width="18" height="18" alt="">
+        <img class="copy-icon" data-check-icon src="images/now/icons/check.svg" width="18" height="18" alt="">
+      </span>
+    </button>
+
+    <a class="card visual-card talent-card" href="https://talentclerk.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Talent Clerk">
+      <video class="visual-media card-video" data-loop-video autoplay muted loop playsinline preload="auto" poster="images/now/talent-clerk-hero.jpg" aria-hidden="true">
+        <source src="images/now/videos/talent-clerk.mp4" type="video/mp4">
+      </video>
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="product-mark" aria-hidden="true"><img src="images/image_5.svg" width="28" height="28" alt=""></span>
+      <span class="external-mark" aria-hidden="true"><img src="images/now/icons/arrow-up-right.svg" width="18" height="18" alt=""></span>
+      <span class="visual-copy">
+        <strong>Talent Clerk</strong>
+        <span>Review resumes 10× faster—without missing great talent.</span>
+      </span>
+    </a>
+
+    <article class="card location-card">
+      <span class="card-icon" aria-hidden="true">
+        <img src="images/now/icons/world.svg" width="20" height="20" alt="">
+      </span>
+      <img class="location-flag" src="images/now/turkiye-flag.png" width="30" height="20" alt="" aria-hidden="true">
+      <pre class="location-globe" data-location-globe aria-hidden="true" role="presentation" inert></pre>
+      <div class="location-copy">
+        <h2>Istanbul, Türkiye</h2>
+        <p data-istanbul-time>Local time · UTC+3</p>
       </div>
-      <div
-        class="absolute bottom-4 left-4 sm:bottom-8 sm:left-8 text-[0.55rem] sm:text-[0.65rem] tracking-[0.25em] sm:tracking-[0.3em] uppercase text-white safe-bottom">
-        <a href="mailto:hi@gokhan.pw" target="_blank" rel="noopener noreferrer">contact</a></div>
-      <div
-        class="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 text-white safe-bottom">
-        <div class="flex items-center gap-6 touch-targets">
-          <a href="https://github.com/gokhaanc" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="opacity-90 hover:opacity-100 transition-opacity">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-github"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
-          </a>
-          <a href="https://x.com/gokhansolo" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="opacity-90 hover:opacity-100 transition-opacity">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/gokhaanc/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="opacity-90 hover:opacity-100 transition-opacity">
-            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5" /><path d="M8 8v.01" /><path d="M12 16v-5" /><path d="M16 16v-3a2 2 0 1 0 -4 0" /><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" /></svg>
-          </a>
-        </div>
+    </article>
+
+    <a class="card visual-card creaffin-card" href="https://creaffin.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Creaffin">
+      <img class="visual-media" src="images/now/creaffin-footer-bg.png" alt="Creaffin coffee cup and creative technology artwork" width="1344" height="768" loading="lazy">
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="product-mark" aria-hidden="true"><img src="images/image_4.svg" width="28" height="28" alt=""></span>
+      <span class="external-mark" aria-hidden="true"><img src="images/now/icons/arrow-up-right.svg" width="18" height="18" alt=""></span>
+      <span class="visual-copy">
+        <strong>Creaffin</strong>
+        <span>Digital agency for doctors.</span>
+      </span>
+    </a>
+
+    <a class="card visual-card app-card imposto-card" href="https://apps.apple.com/app/id6765522972" target="_blank" rel="noopener noreferrer" aria-label="View Imposto on the App Store">
+      <video class="visual-media card-video" data-loop-video autoplay muted loop playsinline preload="auto" poster="images/now/imposto-screen.jpg" aria-hidden="true">
+        <source src="images/now/videos/imposto.mp4" type="video/mp4">
+      </video>
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="product-mark" aria-hidden="true"><img src="images/now/imposto-icon.webp" width="28" height="28" alt=""></span>
+      <span class="external-mark" aria-hidden="true"><img src="images/now/icons/arrow-up-right.svg" width="18" height="18" alt=""></span>
+      <span class="visual-copy">
+        <strong>Imposto</strong>
+        <span>Find the Spy · App Store</span>
+      </span>
+    </a>
+
+    <article class="card visual-card app-card static-visual-card syncdrive-card">
+      <video class="visual-media card-video" data-loop-video autoplay muted loop playsinline preload="auto" poster="images/now/syncdrive-screen.jpg" aria-hidden="true">
+        <source src="images/now/videos/syncdrive.mp4" type="video/mp4">
+      </video>
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="product-mark" aria-hidden="true"><img src="images/now/syncdrive-icon.webp" width="28" height="28" alt=""></span>
+      <span class="availability-pill">Coming Soon</span>
+      <span class="visual-copy">
+        <strong>SyncDrive</strong>
+        <span>Two thumbs. One rhythm.</span>
+      </span>
+    </article>
+
+    <button class="card photo-card photo-car-card" type="button" data-lightbox-trigger aria-label="Open photo: Beige vintage Toyota Land Cruiser under a cloudy sky">
+      <img class="photo-media" src="images/now/photo-7273.webp" alt="Beige vintage Toyota Land Cruiser under a cloudy sky" width="1350" height="1800" loading="lazy">
+    </button>
+
+    <a class="card visual-card plakatr-card" href="https://plakatr.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit PlakaTR">
+      <img class="visual-media" src="images/now/plakatr-hero.jpg" alt="PlakaTR license plate commenting app homepage" width="1280" height="720" loading="lazy">
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="product-mark" aria-hidden="true"><img src="images/image_2.png" width="28" height="28" alt=""></span>
+      <span class="external-mark" aria-hidden="true"><img src="images/now/icons/arrow-up-right.svg" width="18" height="18" alt=""></span>
+      <span class="visual-copy">
+        <strong>PlakaTR</strong>
+        <span>License plate commenting app.</span>
+      </span>
+    </a>
+
+    <button class="card photo-card photo-sunset-card" type="button" data-lightbox-trigger aria-label="Open photo: Sunset over the Bosphorus in Istanbul">
+      <img class="photo-media" src="images/now/photo-7521.webp" alt="Sunset over the Bosphorus in Istanbul" width="1800" height="1350" loading="lazy">
+    </button>
+
+    <button class="card photo-card photo-cat-card" type="button" data-lightbox-trigger aria-label="Open photo: Close-up of a tabby cat">
+      <img class="photo-media" src="images/now/photo-9128.webp" alt="Close-up of a tabby cat" width="1350" height="1800" loading="lazy">
+    </button>
+
+    <article class="card music-card" data-music-card>
+      <iframe class="music-player-frame" data-music-player data-src="https://www.youtube-nocookie.com/embed/t1_N1GpW9P4?autoplay=1&amp;enablejsapi=1&amp;playsinline=1&amp;controls=0&amp;loop=1&amp;playlist=t1_N1GpW9P4&amp;rel=0" title="Lady Hear Me Tonight audio player" loading="lazy" allow="autoplay; encrypted-media" tabindex="-1" aria-hidden="true"></iframe>
+      <a class="music-service" href="https://music.youtube.com/watch?v=t1_N1GpW9P4&amp;si=DPbGFyNjfKwJHHcQ" target="_blank" rel="noopener noreferrer" aria-label="Open Lady Hear Me Tonight on YouTube Music">
+        <img src="images/now/icons/youtube-music.svg" width="24" height="24" alt="" aria-hidden="true">
+      </a>
+      <button class="music-toggle" type="button" data-music-toggle aria-label="Play Lady Hear Me Tonight" aria-pressed="false">
+        <img class="music-control-icon is-visible" data-music-play-icon src="images/now/icons/player-play.svg" width="18" height="18" alt="" aria-hidden="true">
+        <img class="music-control-icon" data-music-pause-icon src="images/now/icons/player-pause.svg" width="18" height="18" alt="" aria-hidden="true">
+      </button>
+      <div class="music-copy">
+        <span>Com211</span>
+        <strong>Lady Hear Me Tonight</strong>
       </div>
-    </main>
-    <svg class="hidden">
-      <defs>
-        <filter id="grain">
-          <feTurbulence baseFrequency="12" numOctaves="12" seed="8"></feTurbulence>
-          <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"></feColorMatrix>
-          <feComponentTransfer>
-            <feFuncA type="discrete" tableValues="0 0.2 0.25 0.2 0.15 0.25 0.2 0.1 0.3 0.2"></feFuncA>
-          </feComponentTransfer>
-          <feComposite operator="over" in2="SourceGraphic"></feComposite>
-        </filter>
-      </defs>
-    </svg>
+      <div class="music-art" aria-hidden="true">
+        <img src="images/now/song-lady-hear-me-tonight.jpg" width="480" height="360" alt="">
+      </div>
+      <span class="sr-only" data-music-live aria-live="polite" aria-atomic="true"></span>
+    </article>
+
+    <a class="card visual-card watch-card" href="https://www.youtube.com/watch?v=eeKFto-WBYk&amp;pp=ygUWcHJvamVjdCBoYWlsIG1hcnkgY2xpcA%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="Watch Project Hail Mary clip on YouTube">
+      <img class="visual-media watch-poster" src="images/now/project-hail-mary.jpg" alt="Ryan Gosling in Project Hail Mary" width="1280" height="720" loading="lazy">
+      <span class="youtube-video-background" data-youtube-background data-src="https://www.youtube-nocookie.com/embed/eeKFto-WBYk?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=eeKFto-WBYk&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;disablekb=1&amp;fs=0&amp;enablejsapi=1" aria-hidden="true">
+        <iframe title="Project Hail Mary background video" loading="lazy" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
+      </span>
+      <span class="visual-shade" aria-hidden="true"></span>
+      <span class="availability-pill watch-pill">Recent Watch</span>
+      <span class="external-mark" aria-hidden="true"><img src="images/now/icons/arrow-up-right.svg" width="18" height="18" alt=""></span>
+      <span class="visual-copy">
+        <strong>Project Hail Mary</strong>
+        <span>Life is Reason · 4K</span>
+      </span>
+    </a>
+  </main>
+
+  <div class="photo-lightbox" data-photo-lightbox role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="photo-lightbox-dismiss" type="button" data-lightbox-close aria-label="Close photo viewer"></button>
+    <figure class="photo-lightbox-figure">
+      <img data-lightbox-image alt="">
+      <figcaption class="sr-only" data-lightbox-caption></figcaption>
+    </figure>
   </div>
-</body>
 
+  <footer class="site-footer">
+    <p>© <span data-year>2026</span> Gökhan Çınar</p>
+  </footer>
+
+  <p class="sr-only" data-copy-live aria-live="polite" aria-atomic="true"></p>
+</body>
 </html>

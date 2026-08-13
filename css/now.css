@@ -231,7 +231,7 @@ img {
     "bio contact talent talent"
     "location creaffin talent talent"
     "imposto syncdrive photo-car photo-car"
-    "plakatr plakatr photo-sunset photo-sunset"
+    "photo-sunset photo-sunset plakatr holy-hub"
     "photo-cat music watch watch";
   gap: var(--gap);
 }
@@ -268,6 +268,7 @@ img {
 .contact-card { grid-area: contact; }
 .talent-card { grid-area: talent; }
 .plakatr-card { grid-area: plakatr; }
+.holy-hub-card { grid-area: holy-hub; }
 .creaffin-card { grid-area: creaffin; }
 .imposto-card { grid-area: imposto; }
 .syncdrive-card { grid-area: syncdrive; }
@@ -424,6 +425,25 @@ img {
 
 .syncdrive-card .visual-media {
   object-position: center 12%;
+}
+
+.holy-hub-card .visual-media {
+  inset: -2px;
+  width: calc(100% + 4px);
+  max-width: none;
+  height: calc(100% + 4px);
+  object-fit: cover;
+  object-position: center center;
+  transform: scale(1.08);
+}
+
+a.holy-hub-card:hover .visual-media,
+a.holy-hub-card:focus-visible .visual-media {
+  transform: scale(1.12);
+}
+
+.holy-hub-card .visual-shade {
+  background: linear-gradient(180deg, rgba(3, 7, 17, 0.04) 22%, rgba(3, 7, 17, 0.16) 50%, rgba(3, 7, 17, 0.88) 100%);
 }
 
 .visual-shade {
@@ -651,6 +671,25 @@ a.visual-card:focus-visible .external-mark {
 
 .watch-card .visual-shade {
   background: linear-gradient(180deg, rgba(5, 9, 12, 0.02) 28%, rgba(5, 9, 12, 0.14) 55%, rgba(5, 9, 12, 0.82) 100%);
+}
+
+.watch-card .visual-copy {
+  gap: 2px;
+}
+
+.watch-rating {
+  display: block;
+  height: 14px;
+  color: #f3b83f;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: -1.5px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.42);
+}
+
+.watch-rating + strong {
+  margin-top: 1px;
 }
 
 .watch-pill {
@@ -957,8 +996,8 @@ button:focus-visible {
       "location creaffin"
       "imposto syncdrive"
       "photo-car photo-car"
-      "plakatr plakatr"
       "photo-sunset photo-sunset"
+      "plakatr holy-hub"
       "photo-cat music"
       "watch watch";
   }

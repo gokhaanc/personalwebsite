@@ -845,7 +845,6 @@ a.visual-card:focus-visible .external-mark {
   transform: translateY(-4px) scale(1.12);
 }
 
-.music-card:hover .music-art img,
 .music-card.is-playing .music-art img {
   animation: music-disc-spin 7s linear infinite;
 }
@@ -1101,7 +1100,6 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
   }
 
-  .music-card:hover .music-art img,
   .music-card.is-playing .music-art img {
     animation: none !important;
   }

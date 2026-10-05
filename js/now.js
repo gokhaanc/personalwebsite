@@ -18,6 +18,7 @@
   const musicPlayIcon = document.querySelector("[data-music-play-icon]");
   const musicPauseIcon = document.querySelector("[data-music-pause-icon]");
   const musicLive = document.querySelector("[data-music-live]");
+  const musicHint = document.querySelector("[data-music-hint]");
   const locationGlobe = document.querySelector("[data-location-globe]");
   const lightboxTriggers = Array.from(document.querySelectorAll("[data-lightbox-trigger]"));
   const photoLightbox = document.querySelector("[data-photo-lightbox]");
@@ -226,7 +227,10 @@
     });
   }
 
-  let musicLoaded = false;
+  let musicController;
+  let musicReady = false;
+  let musicPlaybackRequested = false;
+  let musicHoverBlocked = false;
   let musicPlaying = false;
   let musicStartedByHover = false;
 
@@ -245,38 +249,137 @@
   function initializeMusicPlayer() {
     if (!musicPlayer || !musicToggle || !musicCard) return;
 
-    const setMusicPlayback = (playing, announcement) => {
-      if (playing && !musicLoaded) {
-        musicPlayer.src = musicPlayer.dataset.src;
-        musicLoaded = true;
-      } else if (musicLoaded) {
-        sendYoutubeCommand(musicPlayer, playing ? "playVideo" : "pauseVideo");
-      }
-
-      updateMusicState(playing, announcement);
+    let initializing = false;
+    const setHint = (text) => {
+      if (musicHint) musicHint.textContent = text;
     };
 
-    musicPlayer.addEventListener("load", () => {
-      sendYoutubeCommand(musicPlayer, musicPlaying ? "playVideo" : "pauseVideo");
-    });
+    const synchronizePlayback = () => {
+      if (!musicReady) return;
+      if (musicPlaybackRequested && !document.hidden) {
+        musicController.playVideo();
+      } else {
+        musicController.pauseVideo();
+      }
+    };
+
+    const initializeController = () => {
+      const url = new URL(musicPlayer.dataset.src);
+      url.searchParams.set("origin", window.location.origin);
+      musicPlayer.src = url.href;
+      musicController = new window.YT.Player(musicPlayer, {
+        events: {
+          onReady: () => {
+            musicReady = true;
+            synchronizePlayback();
+          },
+          onStateChange: (event) => {
+            const playing = event.data === 1;
+            // A delayed play event must not restart audio after hover ends.
+            if (playing && (!musicPlaybackRequested || document.hidden)) {
+              musicController.pauseVideo();
+              return;
+            }
+            updateMusicState(playing, playing ? "Playing Lady Hear Me Tonight by Com211." : "");
+            if (playing) {
+              musicHoverBlocked = false;
+              setHint("Playing");
+            } else if (event.data === 3 && musicPlaybackRequested) {
+              setHint("Loading music…");
+            } else if (!musicHoverBlocked) {
+              setHint("Hover to listen");
+            }
+            if (event.data === 0 && musicPlaybackRequested) synchronizePlayback();
+          },
+          onAutoplayBlocked: () => {
+            if (!musicPlaybackRequested) return;
+            musicHoverBlocked = true;
+            musicPlaybackRequested = false;
+            musicStartedByHover = false;
+            setHint("Click play to enable music");
+            updateMusicState(false, "Click play to enable music.");
+          },
+          onError: () => {
+            musicPlaybackRequested = false;
+            musicStartedByHover = false;
+            musicHoverBlocked = true;
+            setHint("Listen on YouTube Music");
+            updateMusicState(false, "Music is unavailable here. Listen on YouTube Music.");
+          }
+        }
+      });
+    };
+
+    const preparePlayer = () => {
+      if (initializing) return;
+      initializing = true;
+      if (window.YT?.Player) {
+        initializeController();
+        return;
+      }
+      const previousReady = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof previousReady === "function") previousReady();
+        initializeController();
+      };
+      const script = document.createElement("script");
+      script.src = "https://www.youtube.com/iframe_api";
+      script.addEventListener("error", () => {
+        musicPlaybackRequested = false;
+        musicHoverBlocked = true;
+        setHint("Listen on YouTube Music");
+        updateMusicState(false, "Music could not load. Listen on YouTube Music.");
+      });
+      document.head.appendChild(script);
+    };
+
+    const requestPlayback = (playing) => {
+      musicPlaybackRequested = playing;
+      if (playing) {
+        setHint("Loading music…");
+        preparePlayer();
+      } else if (!musicHoverBlocked) {
+        setHint("Hover to listen");
+      }
+      synchronizePlayback();
+    };
 
     musicToggle.addEventListener("click", () => {
-      const nextState = !musicPlaying;
+      const nextState = !musicPlaying && (musicStartedByHover || !musicPlaybackRequested);
       musicStartedByHover = false;
-      setMusicPlayback(nextState, `${nextState ? "Playing" : "Paused"} Lady Hear Me Tonight.`);
+      musicHoverBlocked = false;
+      requestPlayback(nextState);
     });
 
     musicCard.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "touch" || musicPlaying) return;
+      if (event.pointerType === "touch" || musicPlaying || musicPlaybackRequested || musicHoverBlocked) return;
       musicStartedByHover = true;
-      setMusicPlayback(true, "Playing Lady Hear Me Tonight by Com211.");
+      requestPlayback(true);
     });
 
     musicCard.addEventListener("pointerleave", () => {
       if (!musicStartedByHover) return;
       musicStartedByHover = false;
-      setMusicPlayback(false, "Paused Lady Hear Me Tonight.");
+      requestPlayback(false);
     });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) return;
+      musicStartedByHover = false;
+      requestPlayback(false);
+    });
+
+    // Prepare near the card so a click can call the ready player immediately.
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        preparePlayer();
+        observer.disconnect();
+      }, { rootMargin: "300px" });
+      observer.observe(musicCard);
+    } else {
+      preparePlayer();
+    }
   }
 
   let globeAnimationFrame;
@@ -476,11 +579,6 @@
     loopVideos.forEach(synchronizeLoopVideo);
     synchronizeYoutubeBackground();
 
-    if (document.hidden && musicPlaying) {
-      musicStartedByHover = false;
-      sendYoutubeCommand(musicPlayer, "pauseVideo");
-      updateMusicState(false, "Paused Lady Hear Me Tonight.");
-    }
   });
 
   const handleMotionPreferenceChange = () => {
